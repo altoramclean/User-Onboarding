@@ -66,14 +66,14 @@ const validate = (name, value) => {
     .then(() => setFormErrors({ ...formErrors, [name]: '' }))
     .catch(err => setFormErrors({ ...formErrors, [name]: err.errors[0] }))
 }
-const inputChange = (name, value) => {
+const handleChange = (name, value) => {
   validate(name, value);
   setFormValues({
     ...formValues,
     [name]: value 
   })
 }
-const formSubmit = () =>{
+const handleSubmit = () =>{
   const newUser = {
     first_name: formValues.first_name.trim(),
     last_name: formValues.last_name.trim(),
@@ -94,28 +94,21 @@ useEffect(() => {
 
 return (
   <div className="App">
-
-    <header>
-      <h1>New User App</h1>
-    </header>
-    
         <Form 
           values={formValues}
-          change={inputChange}
-          submit={formSubmit}
+          change={handleChange}
+          submit={handleSubmit}
           disabled={disabled}
           errors={formErrors}
-
           />
 
 {users.map(item => {
-            return(
-                <User key={item.id} details={item}/>      
-            )
+            <div key = {item.id}>
+            <p>{item.createdAt}</p>
+            <p>{item.email}</p>
+           </div>            
           })}
-
     </div>
-
   );
 }
 export default App;
